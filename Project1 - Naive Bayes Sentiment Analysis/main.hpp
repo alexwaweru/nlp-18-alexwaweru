@@ -1,8 +1,13 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
 #include <sstream>
+#include <vector>
+#include <set>
+#include <tuple>
+#include <map>
 #include <algorithm>
 #include <iterator>
-#include <math.h>
+#include <cmath>
+#include <cstdlib>
+#include <iomanip>

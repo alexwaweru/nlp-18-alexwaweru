@@ -5,9 +5,9 @@
 
 int main(int argc, char** argv)
 {
-    std::map<int, double> prior;
-    std::map<std::string, double> cond;
-    std::tie (prior, cond) = train(argv[1]);
+    //std::map<int, double> prior;
+    //std::map<std::string, double> cond;
+    //train(argv[1]);
 
-    test(prior, cond, argv[2]);
+    test("priors.txt", "conds.txt", argv[1]);
 }

@@ -35,7 +35,7 @@ std::set<std::string> extractVocabulary(std::string filename)
                  back_inserter(tokens));
             
             // Punctuation and numbers to remove from words before inserting to set
-            char punctuations [] = {'.', ',', '!', '?', ';', ':', '/', '(', ')', '0',
+            char punctuations [] = {' ','\'','"', '+', '-', '*', '@', '#', '$', '%', '&', '.', ',', '!', '?', ';', ':', '/', '(', ')', '0',
                                      '1', '2', '3', '4', '5', '6', '7', '8','9'};
 
             // Insert the tokens to the main vector

@@ -4,14 +4,14 @@
 //      set vocabulary
 //      map prior_probabilities for each class
 //      map conditional_probabilities for each text+class e.g the1
-std::tuple < std::map<int,double>, std::map <std::string, double> > train(std::string filename);
+void train(std::string filename);
 
 
-std::tuple < std::map<int,double>, std::map <std::string, double> > train(std::string filename)
+void train(std::string filename)
 {
     // Initialize prior probability, condional probability, vocabulary, number of docs and classes
-    std::map <int, double> prior;
-    std::map <std::string, double> condprob;
+    std::ofstream prior("priors.txt");
+    std::ofstream cond("conds.txt");
     std::set <std::string> vocabulary = extractVocabulary(filename);
     int N = 0;
 
@@ -38,33 +38,24 @@ std::tuple < std::map<int,double>, std::map <std::string, double> > train(std::s
         // Calculate class priors
         int Nc = 0;
         Nc = countDocs(class_file_name);
-        prior[c] = (double)Nc/N;
+        prior << c << "\t" << (double)Nc/N << "\n";
 
-        double den;
-        for (auto &text : vocabulary)
+        double total_Tct;
+        for (auto text : vocabulary)
         {
-            int Tct = countTokensOfTerm(class_file_name, text);
+            double Tct;
+            Tct = countTokensOfTerm(class_file_name, text);
 
-            den = den + Tct + 1;
-
-
-            // Add class to the text 
-            std::string key = text;
-            if (c==0)
-            {
-                key.push_back('0');
-            } else{
-                key.push_back('1');
-            }
-
-            condprob[key] = (Tct+1);
+            total_Tct = total_Tct + (Tct + 1);
         }
 
-        for (auto& p : condprob)
+        for (auto text : vocabulary)
         {
-            p.second = p.second/den;
+            double prob;
+            double Tct;
+            Tct = countTokensOfTerm(class_file_name, text);
+            prob = (Tct + 1)/ (total_Tct) ;
+            cond << text << c <<"\t" << prob << "\n";
         }
     }
-
-    return std::make_tuple(prior, condprob);
 }

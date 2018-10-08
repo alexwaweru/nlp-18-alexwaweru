@@ -1,3 +1,4 @@
+void test(std::string priors_filename, std::string cond_probs_filename, std::string test_file);
 
 void test(std::string priors_filename, std::string cond_probs_filename, std::string test_file)
 {
@@ -50,7 +51,6 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
             std::stringstream ss(line);
             std::transform(line.begin(), line.end(), line.begin(), ::tolower);
 
-
             // Create a vector to hold words of a line temporarily
             std::vector<std::string> words;
             copy(std::istream_iterator<std::string>(ss),
@@ -83,7 +83,7 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
 
                 for (auto t : documents)
                 {   
-                    if (c==0.0)
+                    if (c == 0.0)
                     {
                         t.push_back('0');
                     } else{
@@ -94,8 +94,6 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
                 }
                 score[c] = score_c;
             }
-
-            //std::cout << std::endl;
 
             // Get the class with higher probability
             if (score[0.0] > score[1.0]){
@@ -114,9 +112,4 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
         testfile.close();
         result.close();
     }
-}
-
-int main(int argc, char** argv)
-{
-    test("priors.txt", "conds.txt", argv[1]);
 }

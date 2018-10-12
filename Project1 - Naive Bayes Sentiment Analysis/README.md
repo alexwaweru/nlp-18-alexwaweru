@@ -1,6 +1,6 @@
-#This is an implementation of Naive Bayes Model for Sentiment Analysis
+# This is an implementation of Naive Bayes Model for Sentiment Analysis
 
-##Prediction
+## Prediction
 To predict or test using my pretrained model :
 
 1. Go to your bash shell
@@ -12,7 +12,7 @@ To predict or test using my pretrained model :
 
 Note: The output is stored in file result.txt
 
-##Training
+## Training
 To train the model:
 1. run the commands below 
 ```console

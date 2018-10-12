@@ -4,6 +4,7 @@
 
 int main(int argc, char** argv)
 {
-    std::cout<<"Started!!";
+   std::cout << "Started training";
     test("priors.txt", "conds.txt", argv[1]);
+    return 1;
 }

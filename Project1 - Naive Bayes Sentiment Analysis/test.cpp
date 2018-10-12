@@ -1,21 +1,23 @@
-void test(std::string priors_filename, std::string cond_probs_filename, std::string test_file);
-
 void test(std::string priors_filename, std::string cond_probs_filename, std::string test_file)
 {
-    // Create a list of priors
+    // Create a map of classes and priors
     std::ifstream priors_file(priors_filename);
-    std::map<double, double> priors;   // Map of class and prior probabilities
+    std::map<double, double> priors;  
     std::string priors_line;
     if (priors_file.is_open())
     {
         std::getline(priors_file, priors_line);
-        std::string::size_type sz;    
+        std::string::size_type sz;
         
         // Create a key(class) and value(prior prob) and insert into map
         double key = std::stod(priors_line,&sz);
         double value = std::stod (priors_line.substr(sz));
         priors.insert(std::pair<double, double>(key, value));
+    } else {
+	priors_file.close();
     }
+    priors_file.close();
+
 
     // Create a map of conditional probabilities
     std::ifstream conds_file(cond_probs_filename);
@@ -36,8 +38,10 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
         std::string key = tokens[0] + tokens[1];
         double value = std::stod(tokens[3]);
         conds.insert(std::pair <std::string, double> (key, value));
+    } else {
+	conds_file.close();
     }
-
+    conds_file.close();
 
     // Calculate the score for each class for each line and store max score in the results file
     std::string line;
@@ -48,8 +52,8 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
         while(!testfile.eof())
         {
             std::getline(testfile, line);
-            std::stringstream ss(line);
             std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+	    std::stringstream ss(line);
 
             // Create a vector to hold words of a line temporarily
             std::vector<std::string> words;
@@ -78,9 +82,7 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
 
             for (auto c : classes)
             {
-                double score_c = 0.0;
-                score_c = log(priors[c]);
-
+                score[c] = log(priors[c]);
                 for (auto t : documents)
                 {   
                     if (c == 0.0)
@@ -89,21 +91,14 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
                     } else{
                         t.push_back('1');
                     }
-                    score_c = score_c + conds[t];
-                    std::cout << t << "\t"<<score_c<<"\t"<< conds[t]<<"\n";
+                    score[c] = score[c] + conds[t];
                 }
-                score[c] = score_c;
             }
-
-            // Get the class with higher probability
             if (score[0.0] > score[1.0]){
                 result <<0 << std::endl;
             }
-            else if (score[1.0] > score[0.0]){
-                result << 1 << std::endl;
-            }
             else{
-                result << "tie" <<std::endl;
+                result << 1 << std::endl;
             }
         }
     }

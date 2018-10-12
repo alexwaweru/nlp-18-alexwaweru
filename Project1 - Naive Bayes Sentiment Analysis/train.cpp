@@ -1,10 +1,14 @@
-// Trains a Naive Bayes Sentiment Classifier
-//
-// Returns:
-//      set vocabulary
-//      map prior_probabilities for each class
-//      map conditional_probabilities for each text+class e.g the1
+#include "main.hpp"
+#include "functions.hpp"
+
 void train(std::string filename);
+
+
+int main(int argc, char** argv)
+{
+    train(argv[1]);
+    return 0;
+}
 
 
 void train(std::string filename)

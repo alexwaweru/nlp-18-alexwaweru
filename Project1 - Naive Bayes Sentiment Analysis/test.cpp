@@ -1,51 +1,64 @@
-void test(std::string priors_filename, std::string cond_probs_filename, std::string test_file)
+#include "main.hpp"
+#include "functions.hpp"
+
+
+int main(int argc, char** argv)
 {
     // Create a map of classes and priors
-    std::ifstream priors_file(priors_filename);
-    std::map<double, double> priors;  
+    std::ifstream priors_file(argv[1]);
+    std::map<double, double> priors; 
     std::string priors_line;
     if (priors_file.is_open())
     {
-        std::getline(priors_file, priors_line);
-        std::string::size_type sz;
-        
-        // Create a key(class) and value(prior prob) and insert into map
-        double key = std::stod(priors_line,&sz);
-        double value = std::stod (priors_line.substr(sz));
-        priors.insert(std::pair<double, double>(key, value));
-    } else {
-	priors_file.close();
-    }
-    priors_file.close();
+        while(!priors_file.eof()){
+            std::getline(priors_file, priors_line);
+            // Tokenize the priors_line
+            std::stringstream ss(priors_line);
+            std::vector<std::string> tokens;
+            copy(std::istream_iterator<std::string>(ss),
+                    std::istream_iterator<std::string>(),
+                    back_inserter(tokens));
 
+            double key = std::stod(tokens[0]);
+            double value = std::stod(tokens[1]);
+
+            priors.insert(std::pair<double, double>(key, value));
+        }
+        priors_file.close();
+    } else {
+        std::cout << "Unable to open file\n";
+    }
 
     // Create a map of conditional probabilities
-    std::ifstream conds_file(cond_probs_filename);
+    std::ifstream conds_file(argv[2]);
     std::map<std::string, double> conds;  // Map of conditional probabilities
     std::string conds_line;
     if (conds_file.is_open())
     {
-        std::getline(conds_file, conds_line);
-        std::stringstream ss(conds_line);
+        while(!conds_file.eof()){
+            std::getline(conds_file, conds_line);
+            std::stringstream ss(conds_line);
 
-        // Create a vector to hold tokens of a line temporarily
-        std::vector<std::string> tokens;
-        copy(std::istream_iterator<std::string>(ss),
-                std::istream_iterator<std::string>(),
-                back_inserter(tokens));
-        
-        // Create key(word + class) and value (conditional probability) and add into map
-        std::string key = tokens[0] + tokens[1];
-        double value = std::stod(tokens[3]);
-        conds.insert(std::pair <std::string, double> (key, value));
+            // Create a vector to hold tokens of a line temporarily
+            std::vector<std::string> tokens;
+            copy(std::istream_iterator<std::string>(ss),
+                    std::istream_iterator<std::string>(),
+                    back_inserter(tokens));
+            
+            // Create key(word + class) and value (conditional probability) and add into map
+            std::string key = tokens[0];
+            double value = std::stod(tokens[1]);
+            conds.insert(std::pair <std::string, double> (key, value));
+        }
+        conds_file.close();
     } else {
-	conds_file.close();
+        std::cout << "Unable to open file\n";
     }
     conds_file.close();
 
     // Calculate the score for each class for each line and store max score in the results file
     std::string line;
-    std::ifstream testfile(test_file);
+    std::ifstream testfile(argv[3]);
     std::ofstream result("result.txt");
     if(testfile.is_open() && result.is_open())
     {
@@ -53,7 +66,7 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
         {
             std::getline(testfile, line);
             std::transform(line.begin(), line.end(), line.begin(), ::tolower);
-	    std::stringstream ss(line);
+	        std::stringstream ss(line);
 
             // Create a vector to hold words of a line temporarily
             std::vector<std::string> words;
@@ -91,7 +104,7 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
                     } else{
                         t.push_back('1');
                     }
-                    score[c] = score[c] + conds[t];
+                    score[c] = score[c] + log(conds[t]);
                 }
             }
             if (score[0.0] > score[1.0]){
@@ -107,4 +120,6 @@ void test(std::string priors_filename, std::string cond_probs_filename, std::str
         testfile.close();
         result.close();
     }
+
+    return 0;std::cout << argv[1];
 }

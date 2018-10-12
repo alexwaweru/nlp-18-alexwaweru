@@ -6,6 +6,7 @@
 #include <set>
 #include <tuple>
 #include <map>
+#include <string>
 #include <algorithm>
 #include <iterator>
 #include <cmath>

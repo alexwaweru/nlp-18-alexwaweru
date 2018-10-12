@@ -15,4 +15,4 @@ Run the commands below
 The output will be
 1. A priors.txt file that stores prior probabilities of the classes
 2. A conds.txt file that stores conditional probabilities of the each [word, class] combination
-Go to both files and delete the last line which should be empty. IF YOU DO NOT DO THIS YOU WILL GET A SEGMENTATION FAULT ERROR IF YOU RUN YOU test
+Go to both files and delete the last line which should be empty. IF YOU DO NOT DO THIS YOU WILL GET A SEGMENTATION FAULT ERROR IF YOU RUN YOUR test

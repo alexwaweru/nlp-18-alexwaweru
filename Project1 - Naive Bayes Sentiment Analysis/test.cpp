@@ -5,7 +5,7 @@
 int main(int argc, char** argv)
 {
     // Create a map of classes and priors
-    std::ifstream priors_file(argv[1]);
+    std::ifstream priors_file("priors.txt");
     std::map<double, double> priors; 
     std::string priors_line;
     if (priors_file.is_open())
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     }
 
     // Create a map of conditional probabilities
-    std::ifstream conds_file(argv[2]);
+    std::ifstream conds_file("conds.txt");
     std::map<std::string, double> conds;  // Map of conditional probabilities
     std::string conds_line;
     if (conds_file.is_open())
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 
     // Calculate the score for each class for each line and store max score in the results file
     std::string line;
-    std::ifstream testfile(argv[3]);
+    std::ifstream testfile(argv[1]);
     std::ofstream result("result.txt");
     if(testfile.is_open() && result.is_open())
     {

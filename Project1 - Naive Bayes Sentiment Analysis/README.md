@@ -7,7 +7,7 @@ To predict or test using my pretrained model :
 2. Navigate to where the cloned project is
 3. Run the commands below:
 ```console
-./test piors.txt conds.txt [test file]
+./test [test file]
 ```
 
 Note: The output is stored in file result.txt

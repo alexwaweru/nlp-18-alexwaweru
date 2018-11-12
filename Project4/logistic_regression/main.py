@@ -38,7 +38,6 @@ def logistic_reg(version, testfile, trainfile):
                 file1.write(str(i))
                 file1.write('\n')
             file1.close()
-            print(y_pred)
 
         elif (version == "n"):
             file2 = open("results-lr-n.txt", "w")
@@ -50,7 +49,7 @@ def logistic_reg(version, testfile, trainfile):
             test_data = test_input_conversion(testfile)
             test_features = vectorizer.transform(test_data)
             test_features_nd = test_features.toarray() # for easy usage
-            
+
             # Normalize data
             scaler = Normalizer().fit(test_features_nd)
             normalizedX = scaler.transform(test_features_nd)
@@ -61,7 +60,6 @@ def logistic_reg(version, testfile, trainfile):
                 file2.write(str(i))
                 file2.write('\n')
             file2.close()
-            print(y_pred)
 
         else:
             print("Version not supported!!")

@@ -38,7 +38,6 @@ def naive_b(version, testfile, trainfile):
                 file1.write(str(i))
                 file1.write('\n')
             file1.close()
-            print(y_pred)
 
         elif (version == "n"):
             file2 = open("results-nb-n.txt", "w")
@@ -61,7 +60,6 @@ def naive_b(version, testfile, trainfile):
                 file2.write(str(i))
                 file2.write('\n')
             file2.close()
-            print(y_pred)
 
         else:
             print("Version not supported!!")

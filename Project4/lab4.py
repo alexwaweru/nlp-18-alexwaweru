@@ -6,7 +6,7 @@ def main(classifier_type, version, testfile):
     if (classifier_type == "nb"):
         nb(version, testfile)
     elif(classifier_type == "lr"):
-        lg(version, testfile)
+        lg(version, testfile,"training_set.txt")
     else:
         print("classifier type not supported!!!")
 

@@ -4,7 +4,7 @@ from naive_bayes import NaiveBayes as nb
 
 def main(classifier_type, version, testfile):
     if (classifier_type == "nb"):
-        nb(version, testfile)
+        nb(version, testfile, "training_set.txt")
     elif(classifier_type == "lr"):
         lg(version, testfile,"training_set.txt")
     else:
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         version = sys.argv[2]
         testfile = sys.argv[3]
 
-        # Call the main function
+        # Call the main functionnlp-18
         main(classifier_type, version, testfile)
     else:
         inputs = inputs - 1

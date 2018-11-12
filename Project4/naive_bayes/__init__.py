@@ -1,0 +1,1 @@
+from .main import naive_b as NaiveBayes

@@ -11,7 +11,7 @@ def logistic_reg(version, testfile, trainfile):
         testfile (str): The txt file containing the sentiment data 
         trainfile (str): The txt file containing the test set of sentiment data
     Raises:
-        IOError: Unable to read file
+        IOError: Unable to read a file
     """
 
     try:
